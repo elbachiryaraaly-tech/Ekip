@@ -46,7 +46,7 @@ async function getDetailedStats() {
       console.error("Error obteniendo RSVPs por fecha:", error)
     }
 
-    let totalGuests = { _sum: { numGuests: 0 } }
+    let totalGuests: { _sum: { numGuests: number | null } } = { _sum: { numGuests: 0 } }
     try {
       totalGuests = await prisma.rSVP.aggregate({
         where: { deletedAt: null },
