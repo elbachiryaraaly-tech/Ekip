@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String
+  name          String?
+  role          String   @default("admin")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model RSVP {
+  id                String   @id @default(cuid())
+  firstName         String
+  lastName          String
+  email             String
+  phone             String?
+  attending         Boolean
+  numGuests         Int      @default(0)
+  guests            String? // JSON string: array de objetos con nombre y menú
+  menu              String? // Carne, Pescado, Vegetariano, Vegano
+  allergies         String?
+  hasChildren       Boolean  @default(false)
+  numChildren       Int      @default(0)
+  specialNeeds      String?
+  comments          String?
+  ipHash            String? // Hash de IP para analytics (opcional, respetando privacidad)
+  userAgent         String? // Opcional
+  editToken         String   @unique
+  tokenExpiresAt    DateTime
+  reviewed          Boolean  @default(false)
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  deletedAt         DateTime? // Soft delete
+
+  @@index([email])
+  @@index([attending])
+  @@index([editToken])
+}
+
+model GuestbookEntry {
+  id          String   @id @default(cuid())
+  name        String
+  message     String
+  approved    Boolean  @default(false)
+  approvedBy  String?
+  approvedAt  DateTime?
+  ipHash      String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? // Soft delete
+
+  @@index([approved])
+}
+
+model Settings {
+  id                String   @id @default(cuid())
+  key               String   @unique
+  value             String
+  description       String?
+  updatedAt         DateTime @updatedAt
+  updatedBy         String?
+
+  @@index([key])
+}
+
+model AdminLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0) // Para ordenar las FAQs
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  @@index([order])
+}
+
+
