@@ -295,7 +295,7 @@ export default async function HomePage() {
       <Section id="faq" title="Preguntas frecuentes" className="bg-gradient-to-b from-secondary/20 to-background relative">
         <div className="space-y-6 max-w-4xl mx-auto">
           {faqs.length > 0 ? (
-            faqs.map((faq, index) => (
+            faqs.map((faq: { question: string; answer: string }, index: number) => (
             <Card key={index} className="premium-hover border-2 border-primary/10 elegant-shadow-lg bg-card/95 backdrop-blur-sm relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-24 h-px bg-gradient-to-r from-primary/50 to-transparent"></div>
               <div className="absolute top-0 right-0 w-24 h-px bg-gradient-to-l from-primary/50 to-transparent"></div>
