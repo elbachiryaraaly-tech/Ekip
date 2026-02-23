@@ -24,11 +24,12 @@ async function getDetailedStats() {
     // Consultas más complejas con manejo de errores individual
     let rsvpsByMenu: Array<{ menu: string | null; _count: number }> = []
     try {
-      rsvpsByMenu = await prisma.rSVP.groupBy({
+      const menuResult = await prisma.rSVP.groupBy({
         by: ['menu'],
         where: { deletedAt: null, menu: { not: null } },
         _count: true,
       })
+      rsvpsByMenu = menuResult as Array<{ menu: string | null; _count: number }>
     } catch (error) {
       console.error("Error en groupBy menu:", error)
     }
