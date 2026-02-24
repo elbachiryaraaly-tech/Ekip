@@ -3,7 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+// En Vercel, usar VERCEL_URL si NEXTAUTH_URL no está definida
+if (process.env.VERCEL_URL && !process.env.NEXTAUTH_URL) {
+  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`
+}
+
 export const authOptions: NextAuthOptions = {
+  trustHost: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -64,7 +70,31 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 }
 
-const handler = NextAuth(authOptions)
+let nextAuthHandler: ReturnType<typeof NextAuth> | null = null
+function getHandler() {
+  if (nextAuthHandler) return nextAuthHandler
+  if (!process.env.NEXTAUTH_SECRET && process.env.VERCEL) return null
+  nextAuthHandler = NextAuth(authOptions)
+  return nextAuthHandler
+}
 
-export { handler as GET, handler as POST }
+async function authHandler(req: Request, context: { params?: Promise<Record<string, string>> }) {
+  if (process.env.VERCEL && !process.env.NEXTAUTH_SECRET) {
+    return Response.json(
+      {
+        error: "ConfigurationError",
+        message: "Añade NEXTAUTH_SECRET en Vercel: Settings → Environment Variables. Genera uno con: openssl rand -base64 32",
+      },
+      { status: 500 }
+    )
+  }
+  const handler = getHandler()
+  if (!handler) {
+    return Response.json({ error: "ConfigurationError", message: "NEXTAUTH_SECRET no configurado." }, { status: 500 })
+  }
+  return handler(req as any, context as any)
+}
+
+export const GET = authHandler
+export const POST = authHandler
 
