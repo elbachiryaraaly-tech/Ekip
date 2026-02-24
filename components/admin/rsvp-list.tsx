@@ -15,6 +15,7 @@ interface RSVP {
   firstName: string
   lastName: string
   email: string
+  phone?: string | null
   attending: boolean
   menu: string | null
   guests: any
