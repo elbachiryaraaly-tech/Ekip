@@ -1,3 +1,4 @@
+import type { NextRequest } from "next/server"
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
@@ -78,7 +79,12 @@ function getHandler() {
   return nextAuthHandler
 }
 
-async function authHandler(req: Request, context: { params?: Promise<Record<string, string>> }) {
+type RouteContext = { params: Promise<{ nextauth: string[] }> }
+
+async function authHandler(
+  req: NextRequest,
+  context: RouteContext
+): Promise<Response> {
   if (process.env.VERCEL && !process.env.NEXTAUTH_SECRET) {
     return Response.json(
       {
