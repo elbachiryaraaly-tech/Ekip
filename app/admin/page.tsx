@@ -1,5 +1,7 @@
 import { getCurrentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
+
+export const dynamic = "force-dynamic"
 import { prisma } from "@/lib/prisma"
 import { AdminNav } from "@/components/admin/admin-nav"
 import { LogoutButton } from "@/components/admin/logout-button"

@@ -1,12 +1,13 @@
 "use client"
 
+import { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { CheckCircle2, Mail } from "lucide-react"
 
-export default function ThanksPage() {
+function ThanksContent() {
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
 
@@ -56,6 +57,22 @@ export default function ThanksPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function ThanksPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-secondary flex items-center justify-center px-4 py-12">
+        <Card className="max-w-2xl w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-serif">Cargando...</CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    }>
+      <ThanksContent />
+    </Suspense>
   )
 }
 
