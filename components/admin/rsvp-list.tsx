@@ -19,6 +19,8 @@ interface RSVP {
   attending: boolean
   menu: string | null
   guests: any
+  allergies?: string | null
+  comments?: string | null
   createdAt: Date
 }
 
