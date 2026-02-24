@@ -10,7 +10,6 @@ if (process.env.VERCEL_URL && !process.env.NEXTAUTH_URL) {
 }
 
 export const authOptions: NextAuthOptions = {
-  trustHost: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
