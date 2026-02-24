@@ -42,7 +42,7 @@ export function GuestbookAdminList({ initialEntries }: GuestbookAdminListProps) 
 
         if (response.ok) {
           setEntries(entries.map((e) => 
-            e.id === id ? { ...e, approved: true, approvedAt: new Date() } : e
+            e.id === id ? { ...e, approved: true, approvedAt: new Date().toISOString() } : e
           ))
           router.refresh()
         }
