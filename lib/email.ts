@@ -1,6 +1,10 @@
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend(): Resend | null {
+  const key = process.env.RESEND_API_KEY
+  if (!key || key === "") return null
+  return new Resend(key)
+}
 
 export async function sendRSVPConfirmationEmail(
   to: string,
@@ -52,6 +56,11 @@ export async function sendRSVPConfirmationEmail(
     </html>
   `
 
+  const resend = getResend()
+  if (!resend) {
+    console.warn("RESEND_API_KEY no configurado: no se envía email de confirmación.")
+    return { success: true }
+  }
   try {
     await resend.emails.send({
       from: process.env.EMAIL_FROM || "noreply@boda.com",
