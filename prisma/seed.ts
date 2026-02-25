@@ -37,47 +37,47 @@ async function main() {
     },
     {
       key: "wedding_time",
-      value: "17:00",
-      description: "Hora de la ceremonia",
+      value: "12:00",
+      description: "Hora principal de la boda",
     },
     {
       key: "ceremony_location",
-      value: "Iglesia de San Juan, Madrid",
+      value: "Basílica de Nuestra Señora de las Angustias",
       description: "Ubicación de la ceremonia",
     },
     {
       key: "ceremony_address",
-      value: "Calle Ejemplo, 123, 28001 Madrid",
+      value: "Basílica de Nuestra Señora de las Angustias, Granada",
       description: "Dirección completa de la ceremonia",
     },
     {
       key: "reception_location",
-      value: "Salón de Eventos El Jardín",
+      value: "Carmen de los Mártires",
       description: "Ubicación del banquete",
     },
     {
       key: "reception_address",
-      value: "Avenida Principal, 456, 28001 Madrid",
+      value: "Carmen de los Mártires, Granada",
       description: "Dirección completa del banquete",
     },
     {
       key: "ceremony_time",
-      value: "17:00",
+      value: "12:00",
       description: "Hora de la ceremonia",
     },
     {
       key: "cocktail_time",
-      value: "18:30",
+      value: "14:00",
       description: "Hora del cóctel",
     },
     {
       key: "dinner_time",
-      value: "20:00",
+      value: "15:30",
       description: "Hora de la cena",
     },
     {
       key: "party_time",
-      value: "23:00",
+      value: "20:00",
       description: "Hora de la fiesta",
     },
     {
@@ -92,7 +92,7 @@ async function main() {
     },
     {
       key: "contact_phone",
-      value: "+34 600 000 000",
+      value: "Celia: 673 580 402 · Fernando: 697 776 390",
       description: "Teléfono de contacto",
     },
   ]
