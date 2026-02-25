@@ -16,7 +16,8 @@ import { useToast } from "@/components/ui/use-toast"
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react"
 import Link from "next/link"
 
-const rsvpSchema = z.object({
+const rsvpSchema = z
+  .object({
   firstName: z.string().min(1, "El nombre es obligatorio"),
   lastName: z.string().min(1, "Los apellidos son obligatorios"),
   email: z.string().email("Email inválido"),
@@ -41,7 +42,14 @@ const rsvpSchema = z.object({
     message: "Debes aceptar la política de privacidad",
   }),
   honeypot: z.string().optional(),
-})
+  })
+  .refine(
+    (data) => !data.attending || !!data.menu,
+    {
+      path: ["menu"],
+      message: "El menú principal es obligatorio si asistes",
+    }
+  )
 
 type RSVPFormData = z.infer<typeof rsvpSchema>
 
@@ -56,6 +64,7 @@ export default function RSVPPage() {
     handleSubmit,
     watch,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm<RSVPFormData>({
     resolver: zodResolver(rsvpSchema),
@@ -74,6 +83,27 @@ export default function RSVPPage() {
   const hasChildren = watch("hasChildren")
   const numChildren = watch("numChildren")
   const guests = watch("guests") || []
+
+  const handleNextFromStep1 = async () => {
+    const isValid = await trigger(["firstName", "lastName", "email"])
+    if (!isValid) return
+    setStep(2)
+  }
+
+  const handleNextFromStep2 = async () => {
+    if (!attending) {
+      setStep(3)
+      return
+    }
+
+    const isValid = await trigger(["menu"] as any)
+    if (!isValid) return
+    setStep(3)
+  }
+
+  const handleNextFromStep3 = () => {
+    setStep(4)
+  }
 
   const onSubmit = async (data: RSVPFormData) => {
     setIsSubmitting(true)
@@ -199,7 +229,7 @@ export default function RSVPPage() {
                     </Button>
                     <Button
                       type="button"
-                      onClick={() => setStep(2)}
+                      onClick={handleNextFromStep1}
                       className="ml-auto"
                     >
                       Siguiente
@@ -347,7 +377,7 @@ export default function RSVPPage() {
                     </Button>
                     <Button
                       type="button"
-                      onClick={() => setStep(3)}
+                      onClick={handleNextFromStep2}
                       className="ml-auto"
                     >
                       Siguiente
@@ -425,7 +455,7 @@ export default function RSVPPage() {
                     </Button>
                     <Button
                       type="button"
-                      onClick={() => setStep(4)}
+                      onClick={handleNextFromStep3}
                       className="ml-auto"
                     >
                       Siguiente

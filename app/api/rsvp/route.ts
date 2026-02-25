@@ -5,32 +5,40 @@ import { hashIP, generateEditToken } from "@/lib/utils"
 import { sendRSVPConfirmationEmail } from "@/lib/email"
 import { z } from "zod"
 
-const rsvpSchema = z.object({
-  firstName: z.string().min(1, "El nombre es obligatorio"),
-  lastName: z.string().min(1, "Los apellidos son obligatorios"),
-  email: z.string().email("Email inválido"),
-  phone: z.string().optional(),
-  attending: z.boolean(),
-  numGuests: z.number().int().min(0).default(0),
-  guests: z
-    .array(
-      z.object({
-        name: z.string().min(1),
-        menu: z.string().optional(),
-      })
-    )
-    .optional(),
-  menu: z.enum(["Carne", "Pescado", "Vegetariano", "Vegano"]).optional(),
-  allergies: z.string().optional(),
-  hasChildren: z.boolean().default(false),
-  numChildren: z.number().int().min(0).default(0),
-  specialNeeds: z.string().optional(),
-  comments: z.string().optional(),
-  gdprConsent: z.boolean().refine((val) => val === true, {
-    message: "Debes aceptar la política de privacidad",
-  }),
-  honeypot: z.string().optional(), // Campo honeypot para anti-spam
-})
+const rsvpSchema = z
+  .object({
+    firstName: z.string().min(1, "El nombre es obligatorio"),
+    lastName: z.string().min(1, "Los apellidos son obligatorios"),
+    email: z.string().email("Email inválido"),
+    phone: z.string().optional(),
+    attending: z.boolean(),
+    numGuests: z.number().int().min(0).default(0),
+    guests: z
+      .array(
+        z.object({
+          name: z.string().min(1),
+          menu: z.string().optional(),
+        })
+      )
+      .optional(),
+    menu: z.enum(["Carne", "Pescado", "Vegetariano", "Vegano"]).optional(),
+    allergies: z.string().optional(),
+    hasChildren: z.boolean().default(false),
+    numChildren: z.number().int().min(0).default(0),
+    specialNeeds: z.string().optional(),
+    comments: z.string().optional(),
+    gdprConsent: z.boolean().refine((val) => val === true, {
+      message: "Debes aceptar la política de privacidad",
+    }),
+    honeypot: z.string().optional(), // Campo honeypot para anti-spam
+  })
+  .refine(
+    (data) => !data.attending || !!data.menu,
+    {
+      path: ["menu"],
+      message: "El menú principal es obligatorio si asistes",
+    }
+  )
 
 export async function POST(request: NextRequest) {
   try {
