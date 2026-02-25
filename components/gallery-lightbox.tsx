@@ -20,12 +20,12 @@ export function GalleryLightbox() {
 
   const goPrev = useCallback(() => {
     if (openIndex === null) return
-    setOpenIndex((prev) => (prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1))
+    setOpenIndex(openIndex === 0 ? GALLERY_IMAGES.length - 1 : openIndex - 1)
   }, [openIndex])
 
   const goNext = useCallback(() => {
     if (openIndex === null) return
-    setOpenIndex((prev) => (prev === GALLERY_IMAGES.length - 1 ? 0 : prev + 1))
+    setOpenIndex(openIndex === GALLERY_IMAGES.length - 1 ? 0 : openIndex + 1)
   }, [openIndex])
 
   const close = useCallback(() => setOpenIndex(null), [])
