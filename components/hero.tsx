@@ -13,7 +13,7 @@ interface HeroProps {
 
 export function Hero({ brideName, groomName, weddingDate }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] sm:min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden">
       {/* Imagen de fondo */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -35,37 +35,37 @@ export function Hero({ brideName, groomName, weddingDate }: HeroProps) {
       </div>
 
       {/* Contenido principal */}
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="max-w-5xl mx-auto text-center space-y-8">
+      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 relative z-10">
+        <div className="max-w-5xl mx-auto text-center space-y-5 sm:space-y-6 md:space-y-8">
           {/* Decoración superior */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4 sm:mb-8">
+            <div className="h-px w-16 sm:w-24 md:w-32 bg-gradient-to-r from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
             <div className="relative">
-              <Sparkles className="w-8 h-8 text-primary-foreground animate-float-slow drop-shadow-lg" />
-              <div className="absolute inset-0 w-8 h-8 border-2 border-primary-foreground/30 rounded-full animate-ping"></div>
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary-foreground animate-float-slow drop-shadow-lg" />
+              <div className="absolute inset-0 w-6 h-6 sm:w-8 sm:h-8 border-2 border-primary-foreground/30 rounded-full animate-ping"></div>
             </div>
-            <div className="h-px w-32 bg-gradient-to-l from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
+            <div className="h-px w-16 sm:w-24 md:w-32 bg-gradient-to-l from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
           </div>
 
           {/* Título principal */}
-          <div className="space-y-4 animate-fade-in-up">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-primary-foreground leading-tight drop-shadow-2xl">
+          <div className="space-y-3 sm:space-y-4 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif font-bold text-primary-foreground leading-tight drop-shadow-2xl px-1">
               {brideName}
             </h1>
-            <div className="flex items-center justify-center gap-4 my-6">
-              <div className="h-px w-24 bg-gradient-to-r from-transparent to-primary-foreground/60"></div>
-              <Heart className="w-10 h-10 text-primary-foreground fill-primary-foreground animate-float-slow drop-shadow-lg" />
-              <div className="h-px w-24 bg-gradient-to-l from-transparent to-primary-foreground/60"></div>
+            <div className="flex items-center justify-center gap-3 sm:gap-4 my-4 sm:my-6">
+              <div className="h-px w-12 sm:w-20 md:w-24 bg-gradient-to-r from-transparent to-primary-foreground/60"></div>
+              <Heart className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 text-primary-foreground fill-primary-foreground animate-float-slow drop-shadow-lg" />
+              <div className="h-px w-12 sm:w-20 md:w-24 bg-gradient-to-l from-transparent to-primary-foreground/60"></div>
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-primary-foreground leading-tight drop-shadow-2xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif font-bold text-primary-foreground leading-tight drop-shadow-2xl px-1">
               {groomName}
             </h1>
           </div>
 
           {/* Fecha de la boda */}
-          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="inline-block px-8 py-4 rounded-full bg-primary-foreground/10 border-2 border-primary-foreground/30 backdrop-blur-md">
-              <p className="text-2xl md:text-3xl font-serif text-primary-foreground drop-shadow-lg">
+          <div className="space-y-4 sm:space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="inline-block px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full bg-primary-foreground/10 border-2 border-primary-foreground/30 backdrop-blur-md">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-serif text-primary-foreground drop-shadow-lg">
                 {weddingDate.toLocaleDateString('es-ES', { 
                   weekday: 'long', 
                   year: 'numeric', 
@@ -77,30 +77,31 @@ export function Hero({ brideName, groomName, weddingDate }: HeroProps) {
           </div>
 
           {/* Contador regresivo */}
-          <div className="pt-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="pt-4 sm:pt-6 md:pt-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <Countdown targetDate={weddingDate} />
           </div>
 
           {/* Botón de confirmar asistencia */}
-          <div className="pt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="pt-4 sm:pt-6 md:pt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <Button
+              variant="weddingCta"
               asChild
               size="lg"
-              className="group relative px-8 py-6 text-lg font-serif rounded-full bg-primary-foreground/95 hover:bg-primary-foreground text-primary border-2 border-primary-foreground/20 shadow-2xl hover:shadow-primary-foreground/20 transition-all duration-300 hover:scale-105"
+              className="group relative shadow-2xl min-h-[3rem] sm:min-h-[3.5rem]"
             >
-              <Link href="/rsvp" className="flex items-center gap-3">
-                <Heart className="w-5 h-5 fill-primary group-hover:scale-110 transition-transform" />
+              <Link href="/rsvp" className="flex items-center justify-center gap-2 sm:gap-3">
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-primary group-hover:scale-110 transition-transform shrink-0" />
                 <span>Confirmar asistencia</span>
-                <Heart className="w-5 h-5 fill-primary group-hover:scale-110 transition-transform" />
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-primary group-hover:scale-110 transition-transform shrink-0" />
               </Link>
             </Button>
           </div>
 
           {/* Decoración inferior */}
-          <div className="flex items-center justify-center gap-6 mt-12">
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
-            <Heart className="w-6 h-6 text-primary-foreground fill-primary-foreground animate-float-slow drop-shadow-lg" style={{ animationDelay: '0.5s' }} />
-            <div className="h-px w-32 bg-gradient-to-l from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-12">
+            <div className="h-px w-20 sm:w-24 md:w-32 bg-gradient-to-r from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
+            <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground fill-primary-foreground animate-float-slow drop-shadow-lg" style={{ animationDelay: '0.5s' }} />
+            <div className="h-px w-20 sm:w-24 md:w-32 bg-gradient-to-l from-transparent via-primary-foreground/50 to-primary-foreground/30"></div>
           </div>
         </div>
       </div>

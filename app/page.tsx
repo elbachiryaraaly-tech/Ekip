@@ -354,13 +354,20 @@ export default async function HomePage() {
           </p>
           
           <div className="pt-4 sm:pt-6 md:pt-8 relative overflow-hidden group">
-            <span className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0"></span>
-            <Button variant="weddingCta" asChild size="lg" className="elegant-shadow-2xl relative z-10">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-64 h-24 rounded-full bg-primary-foreground/10 blur-3xl group-hover:bg-primary-foreground/15 transition-colors duration-300" />
+            </div>
+            <Button
+              variant="weddingCta"
+              asChild
+              size="lg"
+              className="relative z-10 font-serif text-lg sm:text-xl px-8 py-4 sm:px-10 sm:py-5 min-h-[3.25rem] sm:min-h-[3.75rem] tracking-wide"
+            >
               <Link href="/rsvp" className="flex items-center justify-center gap-3">
-                <Heart className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 fill-current" />
                 Confirmar asistencia
               </Link>
-          </Button>
+            </Button>
           </div>
           
           <div className="flex items-center justify-center gap-4 sm:gap-8 mt-8 sm:mt-12">

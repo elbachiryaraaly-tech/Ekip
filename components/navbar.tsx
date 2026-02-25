@@ -18,10 +18,10 @@ export function Navbar() {
   ]
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
-      <div className="container mx-auto px-4 lg:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="/" className="text-lg md:text-xl font-sans font-bold text-primary">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 pt-safe">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-14 sm:h-16 md:h-20 min-h-[3.5rem]">
+          <Link href="/" className="text-base sm:text-lg md:text-xl font-sans font-bold text-primary truncate max-w-[60%] sm:max-w-none">
             Boda Celia & Fernando
           </Link>
 
@@ -43,7 +43,7 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
-            <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md">
+            <Button variant="wedding" asChild size="sm" className="rounded-full">
               <Link href="/rsvp">RSVP</Link>
             </Button>
           </div>
@@ -61,12 +61,12 @@ export function Navbar() {
 
         {/* Mobile/Tablet menu */}
         {isOpen && (
-          <div className="lg:hidden py-4 space-y-2 border-t border-border/50">
+          <div className="lg:hidden py-4 pb-safe space-y-1 border-t border-border/50">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="block py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors cursor-pointer"
+                className="block py-3.5 px-4 min-h-[2.75rem] text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 transition-colors cursor-pointer rounded-lg -mx-1"
                 onClick={(e) => {
                   e.preventDefault()
                   setIsOpen(false)
@@ -81,7 +81,7 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
-            <Button asChild size="sm" className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md">
+            <Button variant="wedding" asChild size="lg" className="w-full mt-4 rounded-full">
               <Link href="/rsvp" onClick={() => setIsOpen(false)}>
                 RSVP
               </Link>
