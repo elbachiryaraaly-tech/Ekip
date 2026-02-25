@@ -100,7 +100,10 @@ async function main() {
   for (const setting of settings) {
     await prisma.settings.upsert({
       where: { key: setting.key },
-      update: {},
+      update: {
+        value: setting.value,
+        description: setting.description,
+      },
       create: setting,
     })
   }
@@ -119,7 +122,7 @@ async function main() {
     },
     {
       question: "¿Cómo puedo contactar?",
-      answer: `Puedes escribirnos a ${settings.find(s => s.key === "contact_email")?.value || "hola@boda-celia.com"} o llamarnos al ${settings.find(s => s.key === "contact_phone")?.value || "+34 600 000 000"}.`,
+      answer: `Puedes escribirnos a ${settings.find(s => s.key === "contact_email")?.value || "hola@boda-celia.com"} o llamarnos al ${settings.find(s => s.key === "contact_phone")?.value || "Celia: 673 580 402 · Fernando: 697 776 390"}.`,
       order: 2,
     },
   ]

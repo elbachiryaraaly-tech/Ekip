@@ -178,7 +178,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               id="ceremony_location"
               value={settings.ceremony_location || ""}
               onChange={(e) => handleChange("ceremony_location", e.target.value)}
-              placeholder="Iglesia de San Juan, Madrid"
+              placeholder="Basílica de Nuestra Señora de las Angustias, Granada"
             />
           </div>
           <div>
@@ -187,7 +187,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               id="ceremony_address"
               value={settings.ceremony_address || ""}
               onChange={(e) => handleChange("ceremony_address", e.target.value)}
-              placeholder="Calle Ejemplo, 123, 28001 Madrid"
+              placeholder="Basílica de Nuestra Señora de las Angustias, Granada"
               rows={2}
             />
           </div>
@@ -197,7 +197,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               id="reception_location"
               value={settings.reception_location || ""}
               onChange={(e) => handleChange("reception_location", e.target.value)}
-              placeholder="Salón de Eventos El Jardín"
+              placeholder="Carmen de los Mártires"
             />
           </div>
           <div>
@@ -206,7 +206,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               id="reception_address"
               value={settings.reception_address || ""}
               onChange={(e) => handleChange("reception_address", e.target.value)}
-              placeholder="Avenida Principal, 456, 28001 Madrid"
+              placeholder="Carmen de los Mártires, Granada"
               rows={2}
             />
           </div>
@@ -244,7 +244,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                 id="contact_phone"
                 value={settings.contact_phone || ""}
                 onChange={(e) => handleChange("contact_phone", e.target.value)}
-                placeholder="+34 600 000 000"
+                placeholder="Celia: 673 580 402 · Fernando: 697 776 390"
               />
             </div>
           </div>
