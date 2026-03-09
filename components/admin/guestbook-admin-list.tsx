@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { Search, Check, X, MessageSquare, User, Clock, CheckCircle, XCircle } from "lucide-react"
+import { Search, Check, X, MessageSquare, User, Clock, CheckCircle, XCircle, Trash2 } from "lucide-react"
 import { formatDateTime } from "@/lib/utils"
 
 interface GuestbookEntry {
@@ -259,6 +259,20 @@ export function GuestbookAdminList({ initialEntries }: GuestbookAdminListProps) 
                       >
                         <X className="w-4 h-4 mr-2" />
                         Eliminar
+                      </Button>
+                    </div>
+                  )}
+
+                  {entry.approved && (
+                    <div className="flex justify-end pt-4 border-t border-border/50">
+                      <Button
+                        onClick={() => handleReject(entry.id)}
+                        disabled={isPending}
+                        variant="destructive"
+                        className="flex items-center gap-2"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Eliminar mensaje
                       </Button>
                     </div>
                   )}
