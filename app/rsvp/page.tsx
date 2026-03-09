@@ -20,8 +20,7 @@ const rsvpSchema = z
   .object({
   firstName: z.string().min(1, "El nombre es obligatorio"),
   lastName: z.string().min(1, "Los apellidos son obligatorios"),
-  email: z.string().email("Email inválido"),
-  phone: z.string().optional(),
+  phone: z.string().min(7, "El teléfono es obligatorio"),
   attending: z.boolean(),
   numGuests: z.number().int().min(0).default(0),
   guests: z
@@ -85,7 +84,7 @@ export default function RSVPPage() {
   const guests = watch("guests") || []
 
   const handleNextFromStep1 = async () => {
-    const isValid = await trigger(["firstName", "lastName", "email"])
+    const isValid = await trigger(["firstName", "lastName", "phone"])
     if (!isValid) return
     setStep(2)
   }
@@ -194,28 +193,18 @@ export default function RSVPPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register("email")}
-                      className="mt-1"
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive mt-1">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="phone">Teléfono (opcional)</Label>
+                    <Label htmlFor="phone">Teléfono *</Label>
                     <Input
                       id="phone"
                       type="tel"
                       {...register("phone")}
                       className="mt-1"
                     />
+                    {errors.phone && (
+                      <p className="text-sm text-destructive mt-1">
+                        {errors.phone.message}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex gap-4 pt-4">
@@ -475,7 +464,7 @@ export default function RSVPPage() {
                         <strong>Nombre:</strong> {watch("firstName")} {watch("lastName")}
                       </p>
                       <p>
-                        <strong>Email:</strong> {watch("email")}
+                        <strong>Teléfono:</strong> {watch("phone")}
                       </p>
                       <p>
                         <strong>Asistiré:</strong> {attending ? "Sí" : "No"}

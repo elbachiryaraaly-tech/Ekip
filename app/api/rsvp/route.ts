@@ -9,8 +9,8 @@ const rsvpSchema = z
   .object({
     firstName: z.string().min(1, "El nombre es obligatorio"),
     lastName: z.string().min(1, "Los apellidos son obligatorios"),
-    email: z.string().email("Email inválido"),
-    phone: z.string().optional(),
+    email: z.string().email("Email inválido").optional(),
+    phone: z.string().min(7, "El teléfono es obligatorio"),
     attending: z.boolean(),
     numGuests: z.number().int().min(0).default(0),
     guests: z
@@ -63,16 +63,30 @@ export async function POST(request: NextRequest) {
     // Validar datos
     const validatedData = rsvpSchema.parse(body)
 
-    // Verificar si ya existe un RSVP con este email
-    const existingRSVP = await prisma.rSVP.findFirst({
-      where: {
-        email: validatedData.email,
-        deletedAt: null,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    })
+    // Verificar si ya existe un RSVP con este email o teléfono
+    let existingRSVP: any = null
+
+    if (validatedData.email && validatedData.email.trim() !== "") {
+      existingRSVP = await prisma.rSVP.findFirst({
+        where: {
+          email: validatedData.email,
+          deletedAt: null,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
+    } else if (validatedData.phone && validatedData.phone.trim() !== "") {
+      existingRSVP = await prisma.rSVP.findFirst({
+        where: {
+          phone: validatedData.phone,
+          deletedAt: null,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
+    }
 
     const editToken = generateEditToken()
     const tokenExpiresAt = new Date()
@@ -80,6 +94,11 @@ export async function POST(request: NextRequest) {
 
     const ipHash = hashIP(ip)
     const userAgent = request.headers.get("user-agent") || undefined
+
+    const emailForDb =
+      validatedData.email && validatedData.email.trim() !== ""
+        ? validatedData.email.trim()
+        : `sin-email-${validatedData.phone || "desconocido"}@boda.local`
 
     let rsvp
 
@@ -112,7 +131,7 @@ export async function POST(request: NextRequest) {
         data: {
           firstName: validatedData.firstName,
           lastName: validatedData.lastName,
-          email: validatedData.email,
+          email: emailForDb,
           phone: validatedData.phone,
           attending: validatedData.attending,
           numGuests: validatedData.numGuests,
@@ -131,17 +150,19 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Enviar email de confirmación
-    try {
-      await sendRSVPConfirmationEmail(validatedData.email, {
-        firstName: validatedData.firstName,
-        lastName: validatedData.lastName,
-        attending: validatedData.attending,
-        editToken,
-      })
-    } catch (emailError) {
-      console.error("Error enviando email:", emailError)
-      // No fallar la request si el email falla
+    // Enviar email de confirmación solo si se ha proporcionado email
+    if (validatedData.email && validatedData.email.trim() !== "") {
+      try {
+        await sendRSVPConfirmationEmail(validatedData.email, {
+          firstName: validatedData.firstName,
+          lastName: validatedData.lastName,
+          attending: validatedData.attending,
+          editToken,
+        })
+      } catch (emailError) {
+        console.error("Error enviando email:", emailError)
+        // No fallar la request si el email falla
+      }
     }
 
     return NextResponse.json({
