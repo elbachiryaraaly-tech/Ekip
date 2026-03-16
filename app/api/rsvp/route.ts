@@ -25,6 +25,7 @@ const rsvpSchema = z
     allergies: z.string().optional(),
     hasChildren: z.boolean().default(false),
     numChildren: z.number().int().min(0).default(0),
+    kidsMenu: z.boolean().default(false),
     specialNeeds: z.string().optional(),
     comments: z.string().optional(),
     gdprConsent: z.boolean().refine((val) => val === true, {
@@ -117,6 +118,7 @@ export async function POST(request: NextRequest) {
           allergies: validatedData.allergies,
           hasChildren: validatedData.hasChildren,
           numChildren: validatedData.numChildren,
+          kidsMenu: validatedData.kidsMenu,
           specialNeeds: validatedData.specialNeeds,
           comments: validatedData.comments,
           editToken,
@@ -140,6 +142,7 @@ export async function POST(request: NextRequest) {
           allergies: validatedData.allergies,
           hasChildren: validatedData.hasChildren,
           numChildren: validatedData.numChildren,
+          kidsMenu: validatedData.kidsMenu,
           specialNeeds: validatedData.specialNeeds,
           comments: validatedData.comments,
           editToken,

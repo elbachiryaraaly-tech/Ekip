@@ -35,6 +35,7 @@ const rsvpSchema = z
   allergies: z.string().optional(),
   hasChildren: z.boolean().default(false),
   numChildren: z.number().int().min(0).default(0),
+  kidsMenu: z.boolean().default(false),
   specialNeeds: z.string().optional(),
   comments: z.string().optional(),
   gdprConsent: z.boolean().refine((val) => val === true, {
@@ -81,6 +82,7 @@ export default function RSVPPage() {
   const numGuests = watch("numGuests")
   const hasChildren = watch("hasChildren")
   const numChildren = watch("numChildren")
+  const kidsMenu = watch("kidsMenu")
   const guests = watch("guests") || []
 
   const handleNextFromStep1 = async () => {
@@ -405,6 +407,18 @@ export default function RSVPPage() {
                               {...register("numChildren", { valueAsNumber: true })}
                               className="mt-1"
                             />
+                            <div className="flex items-center space-x-2 mt-3">
+                              <Checkbox
+                                id="kidsMenu"
+                                checked={kidsMenu}
+                                onCheckedChange={(checked) => {
+                                  setValue("kidsMenu", checked === true)
+                                }}
+                              />
+                              <Label htmlFor="kidsMenu" className="cursor-pointer">
+                                ¿Quieres menú infantil para los niños?
+                              </Label>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -480,6 +494,11 @@ export default function RSVPPage() {
                           {hasChildren && (
                             <p>
                               <strong>Niños:</strong> {numChildren}
+                            </p>
+                          )}
+                          {hasChildren && (
+                            <p>
+                              <strong>Menú infantil:</strong> {kidsMenu ? "Sí" : "No"}
                             </p>
                           )}
                         </>

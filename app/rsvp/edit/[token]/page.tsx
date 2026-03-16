@@ -34,6 +34,7 @@ const rsvpUpdateSchema = z.object({
   allergies: z.string().optional(),
   hasChildren: z.boolean().optional(),
   numChildren: z.number().int().min(0).optional(),
+  kidsMenu: z.boolean().optional(),
   specialNeeds: z.string().optional(),
   comments: z.string().optional(),
 })
@@ -79,6 +80,7 @@ export default function EditRSVPPage() {
         setValue("allergies", data.allergies || "")
         setValue("hasChildren", data.hasChildren || false)
         setValue("numChildren", data.numChildren || 0)
+        setValue("kidsMenu", data.kidsMenu || false)
         setValue("specialNeeds", data.specialNeeds || "")
         setValue("comments", data.comments || "")
         setLoading(false)
@@ -139,6 +141,7 @@ export default function EditRSVPPage() {
   const attending = watch("attending") ?? rsvp?.attending
   const numGuests = watch("numGuests") ?? rsvp?.numGuests ?? 0
   const hasChildren = watch("hasChildren") ?? rsvp?.hasChildren ?? false
+  const kidsMenu = watch("kidsMenu") ?? rsvp?.kidsMenu ?? false
   const guests = watch("guests") || rsvp?.guests || []
 
   return (
@@ -251,6 +254,18 @@ export default function EditRSVPPage() {
                           {...register("numChildren", { valueAsNumber: true })}
                           className="mt-1"
                         />
+                        <div className="flex items-center space-x-2 mt-3">
+                          <Checkbox
+                            id="kidsMenu"
+                            checked={kidsMenu}
+                            onCheckedChange={(checked) => {
+                              setValue("kidsMenu", checked === true)
+                            }}
+                          />
+                          <Label htmlFor="kidsMenu" className="cursor-pointer">
+                            ¿Quieres menú infantil para los niños?
+                          </Label>
+                        </div>
                       </div>
                     )}
                   </div>

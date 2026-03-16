@@ -20,6 +20,7 @@ const rsvpUpdateSchema = z.object({
   allergies: z.string().optional(),
   hasChildren: z.boolean().optional(),
   numChildren: z.number().int().min(0).optional(),
+  kidsMenu: z.boolean().optional(),
   specialNeeds: z.string().optional(),
   comments: z.string().optional(),
 })

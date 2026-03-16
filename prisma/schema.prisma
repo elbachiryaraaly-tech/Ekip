@@ -33,6 +33,7 @@ model RSVP {
   allergies         String?
   hasChildren       Boolean  @default(false)
   numChildren       Int      @default(0)
+  kidsMenu          Boolean  @default(false) // Si se solicita menú infantil para los niños
   specialNeeds      String?
   comments          String?
   ipHash            String? // Hash de IP para analytics (opcional, respetando privacidad)
